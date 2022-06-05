@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileCtrl;
 use App\Http\Controllers\servicesCtrl;
 use App\Http\Controllers\SkillCategoryController;
 use App\Http\Controllers\SkillsController;
+use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/admin/login', [AuthController::class, 'loginPage'])->name('login');
 Route::post('/admin/login', [AuthController::class, 'login'])->name('admin.login');
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+    Route::get('/admin/login', [AuthController::class, 'logout'])->name('admin.logout');
     Route::get('/', [HomeController::class, 'index'])->name('admin.home');
 
     /** Skills Categories CRUD routes */
@@ -81,3 +83,4 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/users/edit{id}', [UsersController::class, 'edit'])->name('admin.users.edit');
     Route::put('/users/update', [UsersController::class, 'update'])->name('admin.users.update');
 });
+Route::get('/', [UserHomeController::class, 'index']);
